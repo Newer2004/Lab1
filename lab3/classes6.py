@@ -1,0 +1,8 @@
+orig=input()
+nums=list(map(int, orig.split(" ")))
+print("\nEven numbers from the list:")
+even_nums = list(filter(lambda x: x%2 == 0, nums))
+print(even_nums)
+print("\nOdd numbers from the list:")
+odd_nums = list(filter(lambda x: x%2 != 0, nums))
+print(odd_nums)
