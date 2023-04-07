@@ -10,3 +10,5 @@ def w_to_upper(text):
         else:
             wordd += word
     return wordd
+text=input()
+print(w_to_upper(text))

@@ -1,12 +1,7 @@
 import re
+def f(mObject):
+    return mObject.group("g1").casefold()+ " "
 
-def SnakeToCamelcase(text):
-    modified_word=""
-    pattern = r'[_]'
-    words=pattern.split(text)
-    for i, word in enumerate(words):
-        if i != 0:
-            modified_word += word.capitalize()
-        else: 
-            modified_word += word
-    return 
+text="my_world"
+pattern = "(?P<g1>[a-z])(?P<g2>[_])+"
+print(re.sub(pattern, f, text))

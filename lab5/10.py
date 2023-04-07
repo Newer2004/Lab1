@@ -1,11 +1,6 @@
 import re
-def cameltosnake(text):
-    res = ""
-    pattern = r'[A-Z][a-z]+'
-    words = re.findall(pattern,text)
-    for i, word in enumerate(words):
-        if i == 0:
-            res += word.casefold()
-        else:
-            res += "_" + word.casefold()
-    return res
+def f(mObject):
+    return mObject.group("g1")+ "_" + mObject.group("g2").lower()
+text = "mySuperVar" #camel case
+pattern = "(?P<g1>[a-z])(?P<g2>[A-Z])+"
+print(re.sub(pattern, f, text))
