@@ -3,7 +3,7 @@ import pygame, math
 pygame.init()
 WIDTH, HEIGHT = 800, 770
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
-BLACK = pygame.Color(0, 0, 0)
+COLOR = pygame.Color(0, 0, 0)
 WHITE = pygame.Color(255, 255, 255)
 
 tool_screen = pygame.Surface((800, 30))
@@ -36,12 +36,13 @@ class Button:
 class Pen(GameObject):
     def __init__(self, *args, **kwargs):
         self.points = []  # [(x1, y1), (x2, y2)]
+        self.color = COLOR
 
     def draw(self):
         for idx, value in enumerate(self.points[:-1]):
             pygame.draw.line(
                 SCREEN,
-                BLACK,
+                self.color,
                 start_pos=value,  # self.points[idx]
                 end_pos=self.points[idx + 1],
                 width=2
@@ -55,6 +56,7 @@ class Rectangle(GameObject):
     def __init__(self, start_pos):
         self.start_pos = start_pos  # (x1, y1)
         self.end_pos = start_pos  # (x2, y2)
+        self.color = COLOR
 
     def draw(self):
         start_pos_x = min(self.start_pos[0], self.end_pos[0])
@@ -65,7 +67,7 @@ class Rectangle(GameObject):
 
         pygame.draw.rect(
             SCREEN,
-            BLACK,
+            self.color,
             (
                 start_pos_x,
                 start_pos_y,
@@ -82,9 +84,10 @@ class Circle(GameObject):
     def __init__(self, start_pos):
         self.center = start_pos #x, y
         self.radius = 0 # r
+        self.color = COLOR
     def draw(self):
         pygame.draw.circle(surface=SCREEN,
-                           color=(0, 0, 0),
+                           color=self.color,
                            center=self.center,
                            radius=self.radius,
                            width=2)
@@ -123,15 +126,35 @@ def main():
     ]
     # current_shape = 'pen'
     current_shape = Pen
-   
+    
     while running:
         SCREEN.fill((WHITE))
         tool_screen.fill((100, 100, 100))
+        global COLOR
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-
+            if event.type == pygame.KEYDOWN:
+              if event.key == pygame.K_1:
+                COLOR = pygame.Color(0, 0, 0)
+              if event.key == pygame.K_2:
+                COLOR = pygame.Color(255,255,255)
+              if event.key == pygame.K_3:
+                COLOR = pygame.Color(255,0,0)
+              if event.key == pygame.K_4:
+                COLOR = pygame.Color(0,100,0)
+              if event.key == pygame.K_5:
+                COLOR = pygame.Color(0,0,255)
+              if event.key == pygame.K_6:
+                COLOR = pygame.Color(255,255,0)
+              if event.key == pygame.K_7:
+                COLOR = pygame.Color(0,0,255)
+              if event.key == pygame.K_8:
+                COLOR = pygame.Color(255,128,0)
+              if event.key == pygame.K_9:
+                COLOR = pygame.Color(255,0,255) 
+            
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if rect_button.rect.collidepoint(event.pos):
                     current_shape = Rectangle
@@ -142,7 +165,7 @@ def main():
                 if eraser_button.rect.collidepoint(event.pos):
                     current_shape = Eraser
                 else:
-                    active_obj = current_shape(start_pos=event.pos)
+                    active_obj = current_shape(start_pos=event.pos)   
 
             if event.type == pygame.MOUSEMOTION and active_obj is not None:
                 active_obj.handle(pygame.mouse.get_pos())
