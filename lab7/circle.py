@@ -5,6 +5,7 @@ pygame.init()
 WIDTH = 800
 HEIGHT = 600
 FPS = 60
+COLOR = (255, 0 ,0)
 WHITE = (255,255,255)
 x = WIDTH // 2
 y = HEIGHT // 2
@@ -22,12 +23,14 @@ while running:
             running = False
     screen.fill(WHITE)
     clock.tick(FPS)
-    pygame.draw.circle(screen, (255,0,0), (x, y), 25)
+    pygame.draw.circle(screen, COLOR, (x, y), 25)
     keys = pygame.key.get_pressed()
     if keys[pygame.K_RIGHT] and x + 25 < WIDTH:
         x += 20
+        COLOR = (255, 0 , 0)
     if keys[pygame.K_LEFT] and x > 25:
         x -= 20
+        COLOR = (0, 255, 0)
     if keys[pygame.K_UP] and y > 25:
         y -= 20
     if keys[pygame.K_DOWN] and y + 25 < HEIGHT:

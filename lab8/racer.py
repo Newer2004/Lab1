@@ -131,6 +131,7 @@ def main():
                 SCORE += 1
                 coins.add(Coin())
 
+                
         coin.draw(SCREEN)
         coin.update()
         player.draw(SCREEN)
